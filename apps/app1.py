@@ -5,8 +5,7 @@ from tinydb import TinyDB
 # static vkljuc json in css datoteke
 app = Flask(__name__,
     template_folder="templates",
-    static_folder="static1"
-)
+    static_folder="static1")
 
 # kljuc za session
 app.secret_key = "123"
@@ -26,7 +25,7 @@ def index():
 
     # posle zapiske v html
     return render_template(
-        "index.html",
+        "template1.html",
         notes=notes
     )
 

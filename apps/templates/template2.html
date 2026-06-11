@@ -1,0 +1,50 @@
+<h2>Login</h2>
+
+<form method="POST" action="/login">
+<input name="username" placeholder="username">
+<input name="password" type="password" placeholder="password">
+<button>Login</button>
+</form>
+
+<br>
+
+<h2>Register</h2>
+
+<form method="POST" action="/register">
+<input name="username" placeholder="username">
+<input name="password" type="password" placeholder="password">
+<button>Register</button>
+</form>
+
+<h2>Welcome {{user}}</h2>
+
+<a href="/add">Add post</a>
+<a href="/logout">Logout</a>
+
+<hr>
+
+{% for p in posts %}
+<p><b>{{p.author}}</b>: {{p.text}}</p>
+{% endfor %}
+
+<h2>Welcome {{user}}</h2>
+
+<a href="/add">Add post</a>
+<a href="/logout">Logout</a>
+
+<hr>
+
+{% for p in posts %}
+<p><b>{{p.author}}</b>: {{p.text}}</p>
+{% endfor %}
+
+<h2>New post</h2>
+
+<form method="POST">
+<input name="text" placeholder="text">
+<button>Post</button>
+</form>
+
+<br>
+
+<a href="/">Back</a>

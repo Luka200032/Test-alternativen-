@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block vsebina %}
+<h1>Moji zapiski</h1>
+
+<input type="text" id="iskanje" placeholder="Išči zapiske..." oninput="isci()">
+<div id="rezultati"></div>
+
+<div id="vsi-zapiski">
+{% for z in zapiski %}
+<div class="kartica">
+    <h2>{{ z.naslov }}</h2>
+    <p>{{ z.vsebina }}</p>
+    <a href="/uredi/{{ z.doc_id }}" class="btn">Uredi</a>
+    <a href="/brisi/{{ z.doc_id }}" class="btn btn-rdec" onclick="return confirm('Zbriši?')">Briši</a>
+</div>
+{% else %}
+<p>Še nimaš zapiskov. <a href="/nov">Dodaj prvega!</a></p>
+{% endfor %}
+</div>
+
+<script>
+function isci() {
+    var q = document.getElementById("iskanje").value;
+    if (q.length < 2) {
+        document.getElementById("rezultati").innerHTML = "";
+        document.getElementById("vsi-zapiski").style.display = "block";
+        return;
+    }
+    // AJAX klic na /iskanje
+    fetch("/iskanje?q=" + q)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("vsi-zapiski").style.display = "none";
+            var html = "";
+            if (data.length === 0) {
+                html = "<p>Ni rezultatov.</p>";
+            } else {
+                data.forEach(z => {
+                    html += `<div class="kartica"><h2>${z.naslov}</h2><p>${z.vsebina}</p></div>`;
+                });
+            }
+            document.getElementById("rezultati").innerHTML = html;
+        });
+}
+</script>
+{% endblock %}

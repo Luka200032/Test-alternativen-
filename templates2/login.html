@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block vsebina %}
+<h1>Prijava</h1>
+{% if napaka %}<p class="napaka">{{ napaka }}</p>{% endif %}
+<div class="kartica">
+    <form method="POST">
+        <label>Uporabniško ime:</label>
+        <input type="text" name="ime" required>
+        <label>Geslo:</label>
+        <input type="password" name="geslo" required>
+        <button type="submit">Prijava</button>
+    </form>
+    <p>Nimaš računa? <a href="/register">Registracija</a></p>
+</div>
+{% endblock %}

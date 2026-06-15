@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #e9eef5;
+    margin: 0;
+}
+
+/* glavna stran */
+.container {
+    max-width: 800px;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* naslov + top bar */
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* objave */
+.objava {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    background: #fff;
+}
+
+/* ime uporabnika */
+.objava b {
+    color: #333;
+}
+
+/* slike */
+img {
+    margin-top: 10px;
+    border-radius: 10px;
+    max-width: 100%;
+}
+
+/* gumbi */
+button {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    background: #357bd8;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* like števec */
+span {
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+/* inputi */
+input[type="text"], input[type="file"] {
+    padding: 10px;
+    margin: 5px 5px 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+/* login box */
+form {
+    margin-top: 20px;
+}
+
+/* linki */
+a {
+    color: #4a90e2;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

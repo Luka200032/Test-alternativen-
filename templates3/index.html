@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block naslov %}
+Kviz
+{% endblock %}
+
+{% block vsebina %}
+
+<h1>Kviz</h1>
+
+<h2>Točke: <span id="tocke">0</span></h2>
+
+{% for v in vprasanja %}
+
+    {% set qid = loop.index0 %}
+
+    <h3>{{ v.vprasanje }}</h3>
+
+    {% for moznost in v.moznosti %}
+
+        <button onclick="preveri({{ qid }}, {{ loop.index0 }})">
+            {{ moznost }}
+        </button>
+
+    {% endfor %}
+
+    <br><br>
+
+{% endfor %}
+
+<hr>
+
+<form action="/shrani" method="POST">
+
+    <label>Ime:</label>
+    <input type="text" name="ime" required>
+
+    <button type="submit">
+        Shrani rezultat
+    </button>
+
+</form>
+
+<script>
+
+function preveri(id, izbira){
+
+    fetch("/preveri", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id: id,
+            izbira: izbira
+        })
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        if(data.pravilno){
+            alert("Pravilno!");
+        }
+        else{
+            alert("Napačno!");
+        }
+
+        document.getElementById("tocke").innerText = data.tocke;
+    });
+}
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2f7;
+    margin: 0;
+    padding: 0;
+}
+
+/* Glavni okvir */
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Naslov */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Vprašanja */
+h3 {
+    margin-top: 25px;
+}
+
+/* Gumbi */
+button {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    margin: 6px 6px 6px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 14px;
+}
+
+button:hover {
+    background: #357bd8;
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* Točke */
+#tocke {
+    font-weight: bold;
+    color: #2ecc71;
+    font-size: 20px;
+}
+
+/* Forma */
+form {
+    margin-top: 30px;
+    text-align: center;
+}
+
+input[type="text"] {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+/* Shrani gumb */
+form button {
+    background: #2ecc71;
+}
+
+form button:hover {
+    background: #27ae60;
+}

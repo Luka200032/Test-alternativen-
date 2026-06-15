@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block naslov %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style3.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+    {% block vsebina %}{% endblock %}
+</div>
+
+</body>
+</html>

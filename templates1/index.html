@@ -1,46 +1,57 @@
 {% extends "base.html" %}
 {% block vsebina %}
-<h1>Moji zapiski</h1>
 
-<input type="text" id="iskanje" placeholder="Išči zapiske..." oninput="isci()">
-<div id="rezultati"></div>
+<h1>Zapiski</h1>
 
-<div id="vsi-zapiski">
+<!-- ADD -->
+<form action="/add" method="POST">
+    <input name="naslov" placeholder="naslov" required>
+    <input name="vsebina" placeholder="vsebina" required>
+    <button>Dodaj</button>
+</form>
+
+<hr>
+
+<!-- SEARCH -->
+<input id="q" placeholder="Išči..." oninput="search()">
+
+<div id="rez"></div>
+
+<!-- LIST -->
+<div id="list">
 {% for z in zapiski %}
-<div class="kartica">
-    <h2>{{ z.naslov }}</h2>
-    <p>{{ z.vsebina }}</p>
-    <a href="/uredi/{{ z.doc_id }}" class="btn">Uredi</a>
-    <a href="/brisi/{{ z.doc_id }}" class="btn btn-rdec" onclick="return confirm('Zbriši?')">Briši</a>
-</div>
-{% else %}
-<p>Še nimaš zapiskov. <a href="/nov">Dodaj prvega!</a></p>
+    <div>
+        <h3>{{ z.naslov }}</h3>
+        <p>{{ z.vsebina }}</p>
+        <a href="/delete/{{ z.doc_id }}">Briši</a>
+    </div>
 {% endfor %}
 </div>
 
 <script>
-function isci() {
-    var q = document.getElementById("iskanje").value;
-    if (q.length < 2) {
-        document.getElementById("rezultati").innerHTML = "";
-        document.getElementById("vsi-zapiski").style.display = "block";
+function search(){
+    let q = document.getElementById("q").value;
+
+    if(q.length < 2){
+        document.getElementById("rez").innerHTML = "";
         return;
     }
-    // AJAX klic na /iskanje
-    fetch("/iskanje?q=" + q)
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("vsi-zapiski").style.display = "none";
-            var html = "";
-            if (data.length === 0) {
-                html = "<p>Ni rezultatov.</p>";
-            } else {
-                data.forEach(z => {
-                    html += `<div class="kartica"><h2>${z.naslov}</h2><p>${z.vsebina}</p></div>`;
-                });
-            }
-            document.getElementById("rezultati").innerHTML = html;
+
+    fetch("/search?q=" + q)
+    .then(r => r.json())
+    .then(data => {
+        let html = "";
+
+        data.forEach(z => {
+            html += `<div>
+                        <h3>${z.naslov}</h3>
+                        <p>${z.vsebina}</p>
+                     </div>`;
         });
+
+        document.getElementById("rez").innerHTML = html;
+    });
 }
 </script>
+
 {% endblock %}

@@ -1,52 +1,51 @@
 {% extends "base.html" %}
+
 {% block vsebina %}
+
 <h1>Objave</h1>
 
-<!-- Vreme iz zunanjega API-ja (AJAX) -->
-<div id="vreme-info">🌤 Vreme v Ljubljani: <span id="vreme-text">Nalagam...</span></div>
+<a href="/logout">Logout</a>
+
+<!-- OBJAVA FORM -->
+<form action="/objavi" method="POST" enctype="multipart/form-data">
+    <input name="besedilo" placeholder="Kaj razmišljaš?" required>
+    <input type="file" name="slika">
+    <button type="submit">Objavi</button>
+</form>
+
+<hr>
 
 {% for o in objave %}
-<div class="kartica" id="objava-{{ o.doc_id }}">
-    <p class="avtor">{{ o.avtor }}</p>
+
+<div class="objava">
+
+    <p><b>{{ o.user }}</b></p>
     <p>{{ o.besedilo }}</p>
+
     {% if o.slika %}
-    <div class="slika"><img src="/static2/slike/{{ o.slika }}" alt="slika"></div>
+        <img src="{{ url_for('static', filename='slike/' + o.slika) }}" width="200">
     {% endif %}
-    <button class="lajk-btn" id="lajk-{{ o.doc_id }}" onclick="lajkaj({{ o.doc_id }})">
-        ❤ <span id="stevilo-{{ o.doc_id }}">{{ o.lajki }}</span>
-    </button>
-    {% if o.avtor == user %}
-    <a href="/brisi/{{ o.doc_id }}" class="btn btn-rdec" style="float:right" onclick="return confirm('Zbriši?')">Briši</a>
-    {% endif %}
+
+    <p>❤️ <span id="lajk-{{ loop.index0 }}">{{ o.lajki }}</span></p>
+
+    <button onclick="like({{ loop.index0 }})">Like</button>
+
 </div>
+
 {% else %}
+
 <p>Še ni objav.</p>
+
 {% endfor %}
 
 <script>
-// Pridobi vreme z AJAX klicem
-fetch("/vreme")
-    .then(res => res.json())
+function like(id){
+    fetch("/like/" + id, { method: "POST" })
+    .then(r => r.json())
     .then(data => {
-        document.getElementById("vreme-text").textContent = data.temp + "°C, " + data.opis;
-    })
-    .catch(() => {
-        document.getElementById("vreme-text").textContent = "Ni podatkov";
+        document.getElementById("lajk-" + id).innerText = data.lajki;
     });
-
-// Lajkanje z AJAX
-function lajkaj(oid) {
-    fetch("/lajk/" + oid, { method: "POST" })
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("stevilo-" + oid).textContent = data.lajki;
-            var btn = document.getElementById("lajk-" + oid);
-            if (data.lajkal) {
-                btn.classList.add("aktiven");
-            } else {
-                btn.classList.remove("aktiven");
-            }
-        });
 }
 </script>
+
 {% endblock %}
